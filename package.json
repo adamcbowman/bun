@@ -7,5 +7,10 @@
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "jest",
+    "start": "bun run index.ts"
   }
 }
