@@ -11,6 +11,10 @@
   "scripts": {
     "build": "tsc",
     "test": "jest",
-    "start": "bun run index.ts"
+    "start": "bun run index.ts",
+    "dev": "bun --watch index.ts"
+  },
+  "dependencies": {
+    "figlet": "^1.6.0"
   }
 }
