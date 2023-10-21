@@ -1,11 +1,43 @@
-import figlet from 'figlet'
+import figlet from "figlet";
 
 const server = Bun.serve({
     port: 8000,
     fetch(req) {
-        const body = figlet.textSync('Hello World!')        
-        return new Response(body)
-    }
-})
+        const url = new URL(req.url)
 
-console.log(`Server running at http://localhost:${server.port}`)
+        if (url.pathname === '/') {
+            const body = figlet.textSync('Hello Bun', {
+                font: 'Star Wars',
+                width: 100,
+              });
+            return new Response(body);
+        }
+
+        if (url.pathname === '/about') {
+            return new Response("hi, I'm adam. ");
+        }
+
+        if (url.pathname === '/contact') {
+            return new Response("contact me at adamcbowman@gmail.com");
+        }
+
+        if (url.pathname === '/feed') {
+            throw new Error('Could not fetch feed');
+        }
+
+        if (url.pathname === '/greet') {
+            return new Response(Bun.file('./greet.txt'));
+        }
+
+        return new Response('404!');
+    },
+    error(error) {
+        return new Response(`<pre> ${error} \n ${error.stack}</pre>`, {
+            headers: {
+                'Content-Type': 'text/html'
+            }
+        });
+    }
+});
+
+console.log(`Listening on port http://localhost:${server.port}`);
